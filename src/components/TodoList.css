@@ -1,0 +1,43 @@
+.todo-list {
+  height: 570px;
+  overflow: auto;
+  width: 100%;
+  /* border: 2px solid rgb(76, 0, 255); */
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.todo-item-container {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: aliceblue;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 55px;
+}
+.todo-item {
+  width: 290px;
+  overflow: hidden;
+  height: 25px;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin: auto;
+}
+
+.todo-item-edit-delete-btns-container {
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  /* border: 1px solid navy; */
+}
+
+.edit-todo-input-container {
+  width: 290px;
+  /* border: 1px solid red; */
+}
