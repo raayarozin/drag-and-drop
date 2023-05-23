@@ -51,6 +51,7 @@ const App = () => {
 
           <TodoList
             todos={todos}
+            setTodos={setTodos}
             deleteTodo={deleteTodo}
             updateTodos={updateTodos}
           />
