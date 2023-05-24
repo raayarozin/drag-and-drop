@@ -36,11 +36,13 @@
   /* border: 1px solid red; */
 }
 
-.input {
+.add-input,
+.edit-input {
   padding: 10px;
   border: none;
   outline: none;
   border-radius: 5px;
+  width: 175px;
 }
 
 .visible {

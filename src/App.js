@@ -42,7 +42,7 @@ const App = () => {
       <div className='form-wrapper'>
         <form className='form-container'>
           <div className='input-wrapper'>
-            <input className='input' type='text' id='to-do-add-input' />
+            <input className='add-input' type='text' id='to-do-add-input' />
             <Button
               className='add-btn'
               btnValue='Add'

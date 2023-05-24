@@ -46,7 +46,7 @@ const SortableItem = (props) => {
         >
           <input
             type='text'
-            className='input'
+            className='edit-input'
             defaultValue={props.id}
             id={`edit-todo-input-${props.id}`}
           />

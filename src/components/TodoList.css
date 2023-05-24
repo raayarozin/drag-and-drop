@@ -27,6 +27,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   margin: auto;
+  /* border: 1px solid green; */
 }
 
 .todo-item-edit-delete-btns-container {
@@ -40,4 +41,5 @@
 .edit-todo-input-container {
   width: 290px;
   /* border: 1px solid red; */
+  overflow: hidden;
 }
