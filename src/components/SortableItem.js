@@ -1,13 +1,19 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Button from './Button';
+import { useState } from 'react';
+
 const SortableItem = (props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = { transform: CSS.Transform.toString(transform), transition };
+  const [isEditing, setIsEditing] = useState('🖌');
+  const [isActive, setIsActive] = useState('✔');
 
   const toggleEditInput = (e, value) => {
     e.preventDefault();
+    isEditing === '🖌' ? setIsEditing('-') : setIsEditing('🖌');
+
     const currentTodo = document.getElementById(`current-todo-input-${value}`);
     const editInput = document.getElementById(
       `edit-todo-input-container-${value}`
@@ -21,10 +27,16 @@ const SortableItem = (props) => {
       : (editInput.style.display = 'none');
   };
 
-  const markAsDone = (e, value) => {
+  const toggleDoneTodo = (e, value) => {
     e.preventDefault();
     const doneTodo = document.getElementById(`todo-item-container-${value}`);
-    doneTodo.style.background = 'rgb(215, 249, 222)';
+    if (isActive === '✔') {
+      setIsActive('+');
+      doneTodo.style.background = 'rgb(215, 249, 222)';
+    } else {
+      setIsActive('✔');
+      doneTodo.style.background = 'rgb(255, 252, 253)';
+    }
   };
 
   return (
@@ -66,7 +78,7 @@ const SortableItem = (props) => {
         <div className='todo-item-edit-delete-btns-container'>
           <Button
             className='edit-btn'
-            btnValue='🖌'
+            btnValue={isEditing}
             onClick={(e) => {
               toggleEditInput(e, props.id);
             }}
@@ -80,9 +92,9 @@ const SortableItem = (props) => {
           />
           <Button
             className='mark-as-done-btn'
-            btnValue='✔'
+            btnValue={isActive}
             onClick={(e) => {
-              markAsDone(e, props.id);
+              toggleDoneTodo(e, props.id);
             }}
           />
         </div>

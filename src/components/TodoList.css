@@ -1,17 +1,17 @@
 .todo-list {
-  height: 510px;
+  height: 515px;
   overflow: auto;
   width: 100%;
-  /* border: 2px solid rgb(76, 0, 255); */
   display: block;
   margin: auto;
-  margin-top: 17px;
+  margin-top: 21px;
   padding: 10px;
+  overflow-x: hidden;
 }
 
 .todo-item-container {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  background-color: aliceblue;
+  background-color: rgb(255, 252, 253);
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -24,10 +24,9 @@
   overflow: hidden;
   height: 25px;
   text-align: left;
-  word-wrap: break-word;
   overflow-wrap: break-word;
   margin: auto;
-  /* border: 1px solid green; */
+  font-size: 20px;
 }
 
 .todo-item-edit-delete-btns-container {
@@ -35,11 +34,9 @@
   display: flex;
   justify-content: space-between;
   margin-left: 10px;
-  /* border: 1px solid navy; */
 }
 
 .edit-todo-input-container {
   width: 290px;
-  /* border: 1px solid red; */
   overflow: hidden;
 }

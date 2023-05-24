@@ -4,7 +4,7 @@ import Button from './components/Button';
 import { useState } from 'react';
 
 const App = () => {
-  const initialTodos = ['Make Breakfast', 'Hire Raaya'];
+  const initialTodos = ['Give Raaya the job', 'Hire Raaya'];
   const [todos, setTodos] = useState(initialTodos);
 
   const validateNewTodo = (value) => {

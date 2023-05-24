@@ -4,11 +4,24 @@
   padding: 0;
 }
 
+body {
+  font-family: 'Handlee', cursive;
+}
+
 .App {
   text-align: center;
   background-color: rgba(175, 206, 187, 0.605);
   padding: 30px;
   min-height: 100vh;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(244, 173, 197);
+}
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
 }
 .form-wrapper {
   background: url('../src/assets/bg3.jpg');
@@ -20,12 +33,10 @@
   padding: 10px;
   display: block;
   margin: auto;
-  /* border: 2px solid red; */
 }
 
 .form-container {
-  /* border: 1px solid yellow; */
-  width: 370px;
+  width: 360px;
   display: block;
   margin: auto;
 }
@@ -33,7 +44,6 @@
 .input-wrapper {
   display: flex;
   justify-content: left;
-  /* border: 1px solid red; */
 }
 
 .add-input,
@@ -42,7 +52,7 @@
   border: none;
   outline: none;
   border-radius: 5px;
-  width: 175px;
+  width: 160px;
 }
 
 .visible {
