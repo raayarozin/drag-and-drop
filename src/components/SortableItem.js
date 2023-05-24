@@ -6,21 +6,23 @@ const SortableItem = (props) => {
     useSortable({ id: props.id });
   const style = { transform: CSS.Transform.toString(transform), transition };
 
-  const toggleEditInput = (value) => {
+  const toggleEditInput = (e, value) => {
+    e.preventDefault();
     const currentTodo = document.getElementById(`current-todo-input-${value}`);
     const editInput = document.getElementById(
       `edit-todo-input-container-${value}`
     );
     currentTodo.style.display !== 'none'
       ? (currentTodo.style.display = 'none')
-      : (currentTodo.style.display = 'block');
+      : (currentTodo.style.display = 'flex');
 
-    editInput.style.display !== 'block'
-      ? (editInput.style.display = 'block')
+    editInput.style.display !== 'flex'
+      ? (editInput.style.display = 'flex')
       : (editInput.style.display = 'none');
   };
 
-  const markAsDone = (value) => {
+  const markAsDone = (e, value) => {
+    e.preventDefault();
     const doneTodo = document.getElementById(`todo-item-container-${value}`);
     doneTodo.style.background = 'rgb(215, 249, 222)';
   };
@@ -49,10 +51,12 @@ const SortableItem = (props) => {
             id={`edit-todo-input-${props.id}`}
           />
           <Button
+            type='submit'
             className='save-btn'
             btnValue='Save'
-            onClick={() => {
-              props.updateTodos(
+            onClick={(e) => {
+              props.editExistingTodo(
+                e,
                 props.id,
                 document.getElementById(`edit-todo-input-${props.id}`).value
               );
@@ -63,23 +67,22 @@ const SortableItem = (props) => {
           <Button
             className='edit-btn'
             btnValue='🖌'
-            onClick={() => {
-              toggleEditInput(props.id);
+            onClick={(e) => {
+              toggleEditInput(e, props.id);
             }}
           />
           <Button
             className='delete-btn'
             btnValue='x'
-            onClick={() => {
-              props.deleteTodo(props.id);
+            onClick={(e) => {
+              props.deleteTodo(e, props.id);
             }}
           />
           <Button
             className='mark-as-done-btn'
             btnValue='✔'
-            onClick={() => {
-              console.log('done');
-              markAsDone(props.id);
+            onClick={(e) => {
+              markAsDone(e, props.id);
             }}
           />
         </div>

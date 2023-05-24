@@ -4,6 +4,7 @@ const Button = (props) => {
     <button
       className={`todo-item-btn ${props.className}`}
       onClick={props.onClick}
+      type={props.type | 'button'}
     >
       {props.btnValue}
     </button>

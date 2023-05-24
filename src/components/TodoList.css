@@ -1,11 +1,11 @@
 .todo-list {
-  height: 570px;
+  height: 510px;
   overflow: auto;
   width: 100%;
   /* border: 2px solid rgb(76, 0, 255); */
   display: block;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 17px;
   padding: 10px;
 }
 

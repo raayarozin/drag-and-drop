@@ -20,21 +20,20 @@
   padding: 10px;
   display: block;
   margin: auto;
-  /* border: 1px solid red; */
+  /* border: 2px solid red; */
 }
 
 .form-container {
   /* border: 1px solid yellow; */
-  width: 400px;
+  width: 370px;
   display: block;
   margin: auto;
 }
 
 .input-wrapper {
   display: flex;
-  margin: auto;
   justify-content: left;
-  padding-top: 10px;
+  /* border: 1px solid red; */
 }
 
 .input {

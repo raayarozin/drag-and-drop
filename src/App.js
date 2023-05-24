@@ -1,50 +1,54 @@
 import './App.css';
 import TodoList from './components/TodoList';
 import Button from './components/Button';
-
 import { useState } from 'react';
 
 const App = () => {
   const initialTodos = ['Make Breakfast', 'Hire Raaya'];
   const [todos, setTodos] = useState(initialTodos);
 
-  const handleTodo = (value) => {
+  const validateNewTodo = (value) => {
     return value.trim() !== '' && !todos.includes(value);
   };
 
-  const addTodo = () => {
-    const newTodo = document.getElementById('to-do-add-input').value;
-    if (handleTodo(newTodo)) {
-      setTodos((prevTodos) => [...prevTodos, newTodo]);
+  const addTodo = (e) => {
+    e.preventDefault();
+    const newTodo = document.getElementById('to-do-add-input');
+    if (validateNewTodo(newTodo.value)) {
+      setTodos((prevTodos) => [...prevTodos, newTodo.value]);
+      newTodo.value = '';
     }
   };
 
-  const deleteTodo = (value) => {
+  const editExistingTodo = (e, oldValue, newValue) => {
+    e.preventDefault();
+    const newTodoIndex = todos.indexOf(oldValue);
+    const updatedTodos = [...todos];
+    updatedTodos[newTodoIndex] = newValue;
+    if (validateNewTodo(newValue)) {
+      setTodos(updatedTodos);
+    }
+  };
+
+  const deleteTodo = (e, value) => {
+    e.preventDefault();
     const item = todos.indexOf(value);
     todos.splice(item, 1);
     setTodos([...todos]);
   };
 
-  const updateTodos = (oldValue, newValue) => {
-    const newTodoIndex = todos.indexOf(oldValue);
-    const updatedTodos = [...todos];
-    updatedTodos[newTodoIndex] = newValue;
-    if (handleTodo(newValue)) {
-      setTodos(updatedTodos);
-    }
-  };
-
   return (
     <div className='App'>
       <div className='form-wrapper'>
-        <div className='form-container'>
+        <form className='form-container'>
           <div className='input-wrapper'>
-            <input className='input' type='text' id='to-do-add-input'></input>
+            <input className='input' type='text' id='to-do-add-input' />
             <Button
               className='add-btn'
               btnValue='Add'
-              onClick={() => {
-                addTodo();
+              type='submit'
+              onClick={(e) => {
+                addTodo(e);
               }}
             />
           </div>
@@ -53,9 +57,9 @@ const App = () => {
             todos={todos}
             setTodos={setTodos}
             deleteTodo={deleteTodo}
-            updateTodos={updateTodos}
+            editExistingTodo={editExistingTodo}
           />
-        </div>
+        </form>
       </div>
     </div>
   );

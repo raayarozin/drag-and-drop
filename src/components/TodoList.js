@@ -1,6 +1,11 @@
-import Button from './Button';
 import './TodoList.css';
-import { DndContext, closestCenter } from '@dnd-kit/core';
+import {
+  DndContext,
+  closestCenter,
+  useSensor,
+  useSensors,
+  PointerSensor,
+} from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
@@ -20,15 +25,34 @@ const TodoList = (props) => {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      sensors={sensors}
+    >
       <div className='todo-list'>
         <SortableContext
           items={props.todos}
           strategy={verticalListSortingStrategy}
         >
           {props.todos.map((todo) => {
-            return <SortableItem key={todo} id={todo} />;
+            return (
+              <SortableItem
+                key={todo}
+                id={todo}
+                deleteTodo={props.deleteTodo}
+                editExistingTodo={props.editExistingTodo}
+              />
+            );
           })}
         </SortableContext>
       </div>
