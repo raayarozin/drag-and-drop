@@ -2,39 +2,84 @@ import './App.css';
 import TodoList from './components/TodoList';
 import Button from './components/Button';
 import { useState } from 'react';
+import useInput from './hooks/use-input';
 
 const App = () => {
-  const initialTodos = ['Give Raaya the job', 'Hire Raaya'];
-  const [todos, setTodos] = useState(initialTodos);
+  const initialList = [
+    { todo: 'Give Raaya the job', done: false },
+    { todo: 'Hire Raaya', done: false },
+  ];
+  const [currentList, setCurrentList] = useState(initialList);
+  const [todos, setTodos] = useState(initialList.map((todo) => todo.todo));
+  const isInputValid = (value) => value.trim() !== '' && !todos.includes(value);
+  const {
+    value: Input,
+    valueChangeHandler: InputChangeHandler,
+    reset: resetInput,
+  } = useInput(isInputValid);
 
-  const validateNewTodo = (value) => {
-    return value.trim() !== '' && !todos.includes(value);
-  };
-
+  //ADD TODO
   const addTodo = (e) => {
     e.preventDefault();
     const newTodo = document.getElementById('to-do-add-input');
-    if (validateNewTodo(newTodo.value)) {
-      setTodos((prevTodos) => [...prevTodos, newTodo.value]);
-      newTodo.value = '';
+
+    if (isInputValid(newTodo.value)) {
+      updateTodoStates(
+        [...todos, newTodo.value],
+        [...currentList, { todo: newTodo.value, done: false }]
+      );
+      resetInput();
     }
   };
 
+  //EDIT TODO
   const editExistingTodo = (e, oldValue, newValue) => {
     e.preventDefault();
-    const newTodoIndex = todos.indexOf(oldValue);
+    const editedItemIndex = todos.indexOf(oldValue);
+
     const updatedTodos = [...todos];
-    updatedTodos[newTodoIndex] = newValue;
-    if (validateNewTodo(newValue)) {
-      setTodos(updatedTodos);
+    updatedTodos[editedItemIndex] = newValue;
+
+    const updateCurrentList = [...currentList];
+    updateCurrentList[editedItemIndex].todo = newValue;
+    updateCurrentList[editedItemIndex].done = false;
+
+    if (isInputValid(newValue)) {
+      updateTodoStates(updatedTodos, updateCurrentList);
     }
   };
 
+  //DELETE TODO
   const deleteTodo = (e, value) => {
     e.preventDefault();
     const item = todos.indexOf(value);
     todos.splice(item, 1);
-    setTodos([...todos]);
+    currentList.splice(item, 1);
+    updateTodoStates([...todos], [...currentList]);
+  };
+
+  //HANDLE "DONE" TODO
+  const handleIsTodoDone = (e, value) => {
+    e.preventDefault();
+    const updatedTodoList = currentList
+      .map((item) => {
+        if (item.todo === value) {
+          item.done ? (item.done = false) : (item.done = true);
+        }
+        return item;
+      })
+      .sort((x, y) => x.done - y.done);
+
+    updateTodoStates(
+      updatedTodoList.map((todo) => todo.todo),
+      updatedTodoList
+    );
+  };
+
+  //UPDATE TODOS STATES
+  const updateTodoStates = (newTodos, newCurrentList) => {
+    setCurrentList(newCurrentList);
+    setTodos(newTodos);
   };
 
   return (
@@ -42,10 +87,16 @@ const App = () => {
       <div className='form-wrapper'>
         <form className='form-container'>
           <div className='input-wrapper'>
-            <input className='add-input' type='text' id='to-do-add-input' />
+            <input
+              id='to-do-add-input'
+              className='add-input'
+              type='text'
+              onChange={InputChangeHandler}
+              value={Input}
+            />
             <Button
               className='add-btn'
-              btnValue='Add'
+              btnValue='→'
               type='submit'
               onClick={(e) => {
                 addTodo(e);
@@ -55,9 +106,11 @@ const App = () => {
 
           <TodoList
             todos={todos}
-            setTodos={setTodos}
+            currentList={currentList}
+            updateTodoStates={updateTodoStates}
             deleteTodo={deleteTodo}
             editExistingTodo={editExistingTodo}
+            handleIsTodoDone={handleIsTodoDone}
           />
         </form>
       </div>

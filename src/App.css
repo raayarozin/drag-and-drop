@@ -24,7 +24,7 @@ body {
   background: #f1f1f1;
 }
 .form-wrapper {
-  background: url('../src/assets/bg3.jpg');
+  background: url('../src/assets/bg.jpg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -46,19 +46,19 @@ body {
   justify-content: left;
 }
 
-.add-input,
+.add-input {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid rgba(165, 42, 42, 0.525);
+  background: none;
+  width: 160px;
+}
 .edit-input {
   padding: 10px;
   border: none;
   outline: none;
   border-radius: 5px;
   width: 160px;
-}
-
-.visible {
-  display: block;
-}
-
-.invisible {
-  display: none;
+  background: #f1f1f1;
 }

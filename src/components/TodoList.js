@@ -17,11 +17,12 @@ const TodoList = (props) => {
   const handleDragEnd = (e) => {
     const { active, over } = e;
     if (active.id !== over.id) {
-      props.setTodos((items) => {
-        const activeIndex = items.indexOf(active.id);
-        const overIndex = items.indexOf(over.id);
-        return arrayMove(items, activeIndex, overIndex);
-      });
+      const activeIndex = props.todos.indexOf(active.id);
+      const overIndex = props.todos.indexOf(over.id);
+      props.updateTodoStates(
+        arrayMove(props.todos, activeIndex, overIndex),
+        arrayMove(props.currentList, activeIndex, overIndex)
+      );
     }
   };
 
@@ -51,6 +52,7 @@ const TodoList = (props) => {
                 id={todo}
                 deleteTodo={props.deleteTodo}
                 editExistingTodo={props.editExistingTodo}
+                handleIsTodoDone={props.handleIsTodoDone}
               />
             );
           })}

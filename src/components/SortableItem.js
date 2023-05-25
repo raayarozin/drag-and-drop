@@ -7,54 +7,48 @@ const SortableItem = (props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = { transform: CSS.Transform.toString(transform), transition };
-  const [isEditing, setIsEditing] = useState('🖌');
-  const [isActive, setIsActive] = useState('✔');
+  const [editingBtn, setEditingBtn] = useState('🖌');
+  const [isEditing, setIsEditing] = useState(false);
+  const [doneBtn, setIsDoneBtn] = useState('+');
+  const [isDone, setIsDone] = useState(false);
 
-  const toggleEditInput = (e, value) => {
+  const toggleEditInput = (e) => {
     e.preventDefault();
-    isEditing === '🖌' ? setIsEditing('-') : setIsEditing('🖌');
-
-    const currentTodo = document.getElementById(`current-todo-input-${value}`);
-    const editInput = document.getElementById(
-      `edit-todo-input-container-${value}`
-    );
-    currentTodo.style.display !== 'none'
-      ? (currentTodo.style.display = 'none')
-      : (currentTodo.style.display = 'flex');
-
-    editInput.style.display !== 'flex'
-      ? (editInput.style.display = 'flex')
-      : (editInput.style.display = 'none');
+    if (isEditing) {
+      setIsEditing(false);
+      setEditingBtn('-');
+    } else {
+      setIsEditing(true);
+      setEditingBtn('🖌');
+    }
   };
 
-  const toggleDoneTodo = (e, value) => {
-    e.preventDefault();
-    const doneTodo = document.getElementById(`todo-item-container-${value}`);
-    if (isActive === '✔') {
-      setIsActive('+');
-      doneTodo.style.background = 'rgb(215, 249, 222)';
+  const handleDoneBtn = () => {
+    if (isDone) {
+      setIsDone(false);
+      setIsDoneBtn('+');
     } else {
-      setIsActive('✔');
-      doneTodo.style.background = 'rgb(255, 252, 253)';
+      setIsDone(true);
+      setIsDoneBtn('✔');
     }
   };
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
-        className='todo-item-container'
+        className={`todo-item-container isDone-${isDone}`}
         id={`todo-item-container-${props.id}`}
         key={props.id}
       >
         <div
-          id={`current-todo-input-${props.id}`}
-          className='todo-item visible'
+          id={`current-todo-${props.id}`}
+          className={`todo-item todo-item-visible-${isEditing}`}
         >
           {props.id}
         </div>
         <div
-          id={`edit-todo-input-container-${props.id}`}
-          className='edit-todo-input-container invisible'
+          id={`current-todo-container-${props.id}`}
+          className={`edit-todo-container edited-item-visible-${isEditing}`}
         >
           <input
             type='text'
@@ -78,9 +72,9 @@ const SortableItem = (props) => {
         <div className='todo-item-edit-delete-btns-container'>
           <Button
             className='edit-btn'
-            btnValue={isEditing}
+            btnValue={editingBtn}
             onClick={(e) => {
-              toggleEditInput(e, props.id);
+              toggleEditInput(e);
             }}
           />
           <Button
@@ -92,9 +86,10 @@ const SortableItem = (props) => {
           />
           <Button
             className='mark-as-done-btn'
-            btnValue={isActive}
+            btnValue={doneBtn}
             onClick={(e) => {
-              toggleDoneTodo(e, props.id);
+              handleDoneBtn();
+              props.handleIsTodoDone(e, props.id);
             }}
           />
         </div>
